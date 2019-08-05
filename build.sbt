@@ -111,7 +111,7 @@ val scalacheck = project
     name := "scalaz-deriving-scalacheck",
     libraryDependencies ++= Seq(
       "com.propensive" %% "magnolia"                  % magnoliaVersion,
-      "org.scalaz"     %% "scalaz-scalacheck-binding" % s"$scalazVersion-scalacheck-1.13",
+      "org.scalacheck" %% "scalacheck"                % "1.14.0",
       "org.scalaz"     %% "scalaz-scalacheck-binding" % s"$scalazVersion-scalacheck-1.14" % "test"
     )
   )
@@ -148,11 +148,11 @@ val xmlformat = (project in file("examples/xmlformat"))
     MacroParadise,
     MonadicFor,
     libraryDependencies ++= Seq(
-      "com.fasterxml.woodstox" % "woodstox-core" % "5.3.0",
-      "eu.timepit"             %% "refined"      % "0.9.9",
-      "org.scalaz"             %% "scalaz-core"  % scalazVersion,
-      "com.chuusai"            %% "shapeless"    % shapelessVersion,
-      "com.github.mpilquist"   %% "simulacrum"   % simulacrumVersion
+      "com.fasterxml.woodstox" % "woodstox-core"              % "5.3.0",
+      "eu.timepit"             %% "refined"                   % "0.9.9",
+      "org.scalaz"             %% "scalaz-scalacheck-binding" % s"$scalazVersion-scalacheck-1.14",
+      "com.chuusai"            %% "shapeless"                 % shapelessVersion,
+      "com.github.mpilquist"   %% "simulacrum"                % simulacrumVersion
     )
   )
   .enablePlugins(NeoJmhPlugin)
@@ -170,10 +170,10 @@ val jsonformat = (project in file("examples/jsonformat"))
     MacroParadise,
     MonadicFor,
     libraryDependencies ++= Seq(
-      "eu.timepit"           %% "refined"     % "0.9.9",
-      "org.scalaz"           %% "scalaz-core" % scalazVersion,
-      "com.github.mpilquist" %% "simulacrum"  % simulacrumVersion,
-      "org.typelevel"        %% "jawn-parser" % "0.14.2"
+      "eu.timepit"           %% "refined"                   % "0.9.9",
+      "org.scalaz"           %% "scalaz-scalacheck-binding" % s"$scalazVersion-scalacheck-1.14",
+      "com.github.mpilquist" %% "simulacrum"                % simulacrumVersion,
+      "org.typelevel"        %% "jawn-parser"               % "0.14.2"
     )
     //addCompilerPlugin("ch.epfl.scala" %% "scalac-profiling" % "1.0.0"),
     //scalacOptions ++= Seq("-Ystatistics:typer", "-P:scalac-profiling:no-profiledb")

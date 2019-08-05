@@ -6,9 +6,6 @@ package fommil
 import magnolia._, mercator._
 import org.scalacheck._
 
-import scalaz._, Scalaz._
-import scalaz.scalacheck.ScalaCheckBinding._
-
 // although it is possible to use the scalaz.Deriving API to define an Arbitrary
 // it will never satisfy the Alt laws and will always be at risk of causing
 // typeclass decoherence with the Applicative from ScalaCheckBinding, so it's
@@ -19,7 +16,7 @@ object MagnoliaArbitrary {
   implicit val monadicGen: Monadic[Gen] = new Monadic[Gen] {
     def flatMap[A, B](fa: Gen[A], f: A => Gen[B]): Gen[B] = fa.flatMap(f)
     def map[A, B](fa: Gen[A], f: A => B): Gen[B]          = fa.map(f)
-    def point[A](a: A): Gen[A]                            = a.point[Gen]
+    def point[A](a: A): Gen[A]                            = Gen.sized(_ => Gen.const(a))
   }
 
   def combine[A](ctx: CaseClass[Arbitrary, A]): Arbitrary[A] = Arbitrary {
