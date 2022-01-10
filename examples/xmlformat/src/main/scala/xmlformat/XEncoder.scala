@@ -4,9 +4,8 @@
 package xmlformat
 
 import scalaz._, Scalaz._
-import simulacrum._
 
-@typeclass trait XEncoder[A] {
+trait XEncoder[A] {
   def toXml(a: A): XChildren
 
   // for performance
@@ -19,6 +18,8 @@ object XEncoder
     with XEncoderStdlib1
     with XEncoderScalaz2
     with XEncoderStdlib2     {
+
+  def apply[A](implicit a: XEncoder[A]): XEncoder[A] = a
 
   implicit val contravariant: Contravariant[XEncoder] =
     new Contravariant[XEncoder] {

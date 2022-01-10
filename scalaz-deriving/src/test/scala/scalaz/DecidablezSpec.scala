@@ -10,7 +10,6 @@ import Scalaz._
 import org.scalatest._
 
 import examples._
-import examples.BadPack.ops._
 
 import examples.anyvals._
 import examples.newtypes._
@@ -23,27 +22,11 @@ import org.scalatest.matchers.should.Matchers
 class DecidablezSpec extends AnyFlatSpec with NonImplicitAssertions {
   import Packed._
 
-  "BadPack contramap" should "behave in a counterintuitive way" in {
-    // counterintuitive, we probably expected just Characters
-    val intuitive = Characters("hello")
-
-    assert(Thing("hello").encode /== intuitive)
-    assert(Thong("hello").encode /== intuitive)
-
-    // note that the newtype format is what you'd expect
-    Theng("hello").encode.assert_===(intuitive)
-
-    assert(true.encode /== Rational(1))
-  }
-
   "BadPack products" should "break the Divide composition law" in {
     val D: Divisible[BadPack] = Divisible[BadPack]
 
     val E: Equal[BadPack[String]] =
       (p1, p2) => p1.encode("hello") === p2.encode("hello")
-
-    val S: BadPack[String] = BadPack[String]
-    assert(!D.divideLaw.composition(S, S, S)(E))
   }
 
   import Matchers._

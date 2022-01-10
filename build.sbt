@@ -1,6 +1,5 @@
 val scalazVersion     = "7.3.5"
 val shapelessVersion  = "2.3.7"
-val simulacrumVersion = "1.0.1"
 val magnoliaVersion   = "0.12.8"
 val refinedVersion    = "0.9.28"
 val newtypeVersion    = "0.4.4"
@@ -58,7 +57,6 @@ val macros = (project in file("deriving-macro"))
       "org.scala-lang"     % "scala-reflect"  % scalaVersion.value % "provided",
       "org.scalaz"        %% "scalaz-core"    % scalazVersion      % "test",
       "com.chuusai"       %% "shapeless"      % shapelessVersion   % "test",
-      "org.typelevel"     %% "simulacrum"     % simulacrumVersion  % "test",
       "com.typesafe.play" %% "play-json"      % "2.9.2"            % "test",
       "io.estatico"       %% "newtype"        % newtypeVersion     % "test"
     )
@@ -137,7 +135,6 @@ val deriving = (project in file("scalaz-deriving"))
     scalacOptions += "-Yno-predef",
     libraryDependencies ++= Seq(
       "io.estatico"   %% "newtype"        % newtypeVersion     % "test",
-      "org.typelevel" %% "simulacrum"     % simulacrumVersion  % "test",
       "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
     )
   )
@@ -155,7 +152,6 @@ val xmlformat = (project in file("examples/xmlformat"))
       "eu.timepit"            %% "refined"       % refinedVersion,
       "org.scalaz"            %% "scalaz-core"   % scalazVersion,
       "com.chuusai"           %% "shapeless"     % shapelessVersion,
-      "org.typelevel"         %% "simulacrum"    % simulacrumVersion
     )
   )
   .enablePlugins(NeoJmhPlugin)
@@ -175,7 +171,6 @@ val jsonformat = (project in file("examples/jsonformat"))
     libraryDependencies ++= Seq(
       "eu.timepit"        %% "refined"         % refinedVersion,
       "org.scalaz"        %% "scalaz-core"     % scalazVersion,
-      "org.typelevel"     %% "simulacrum"      % simulacrumVersion,
       "org.scalatestplus" %% "scalacheck-1-15" % "3.2.10.0",
       "org.typelevel"     %% "jawn-parser"     % "1.3.2"
     )

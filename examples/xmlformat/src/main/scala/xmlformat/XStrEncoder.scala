@@ -4,10 +4,9 @@
 package xmlformat
 
 import scalaz._, Scalaz._
-import simulacrum._
 
 /** Encoder for the XString half of the XNode ADT. */
-@typeclass trait XStrEncoder[A] { self =>
+trait XStrEncoder[A] { self =>
   def toXml(a: A): XString
 
   // for performance
@@ -18,6 +17,8 @@ object XStrEncoder
     extends XStrEncoderScalaz
     with XStrEncoderRefined
     with XStrEncoderStdlib      {
+
+  def apply[A](implicit a: XStrEncoder[A]): XStrEncoder[A] = a
 
   implicit val contravariant: Contravariant[XStrEncoder] =
     new Contravariant[XStrEncoder] {

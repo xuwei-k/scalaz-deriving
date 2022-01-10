@@ -10,9 +10,7 @@ import scala.{ Either, Right }
 import org.scalatest.matchers.should.Matchers._
 import shapeless.the
 import testing.classes._
-import testing.typeclasses._
 
-import Cofoo.ops._
 import org.scalatest.flatspec.AnyFlatSpec
 
 class XDerivingTest extends AnyFlatSpec {

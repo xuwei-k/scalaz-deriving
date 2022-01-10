@@ -10,8 +10,6 @@ import play.api.libs.json.{ JsArray, JsString }
 import scala.collection.immutable.List
 import shapeless.the
 import testing.classes._
-import testing.typeclasses._
-import Cofoo.ops._
 import org.scalatest.flatspec.AnyFlatSpec
 
 class DerivingTest extends AnyFlatSpec {

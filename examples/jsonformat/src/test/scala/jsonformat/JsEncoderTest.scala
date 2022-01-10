@@ -3,8 +3,6 @@
 
 package jsonformat
 
-import JsEncoder.ops._
-
 import scalaz._, Scalaz._
 
 class JsEncoderTest extends JsTest {

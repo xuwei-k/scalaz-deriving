@@ -9,9 +9,7 @@ import scala.Either
 
 import scalaz.unused
 
-import simulacrum.typeclass
-
-@typeclass trait Cofoo[A] {
+trait Cofoo[A] {
   def toFoo(@unused a: A): String =
     "this is the default gen codepath"
 
@@ -32,7 +30,7 @@ object DerivedCofoo       {
   ): DerivedCofoo[T] = new DerivedCofoo[T] {}
 }
 
-@typeclass trait Cobar[T] {}
+trait Cobar[T] {}
 object Cobar              {
   implicit val invariant: scalaz.InvariantFunctor[Cobar] =
     new scalaz.InvariantFunctor[Cobar] {
@@ -43,7 +41,7 @@ object Cobar              {
   implicit val string: Cobar[String] = new Cobar[String] {}
 }
 
-@typeclass trait OrphanCobar[T] {}
+trait OrphanCobar[T] {}
 object OrphanCobarInstances     {
   implicit val invariant: scalaz.InvariantFunctor[OrphanCobar] =
     new scalaz.InvariantFunctor[OrphanCobar] {
@@ -63,14 +61,14 @@ object CustomCobar              {
   ): Cobar[T] = new Cobar[T] {}
 }
 
-@typeclass trait CustomGen[T] {}
+trait CustomGen[T] {}
 object CustomGen              {
   def gen[T]: CustomGen[T] = new CustomGen[T] {}
 }
 
 package a {
-  @typeclass trait Cobaz[T[_]] {}
-  @typeclass trait DerivedCobaz[T[_]] extends Cobaz[T] {}
+  trait Cobaz[T[_]] {}
+  trait DerivedCobaz[T[_]] extends Cobaz[T] {}
   object DerivedCobaz          {
     def gen[T[_]](implicit
       @unused G: shapeless.Generic1[T, DerivedCobaz]
@@ -81,8 +79,8 @@ package a {
   }
 }
 package b {
-  @typeclass trait Cobaz[T[_]] {}
-  @typeclass trait DerivedCobaz[T[_]] extends Cobaz[T] {}
+  trait Cobaz[T[_]] {}
+  trait DerivedCobaz[T[_]] extends Cobaz[T] {}
   object DerivedCobaz {
     def gen[T[_]](implicit
       @unused G: shapeless.Generic1[T, DerivedCobaz]

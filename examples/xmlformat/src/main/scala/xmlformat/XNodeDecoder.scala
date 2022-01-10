@@ -5,11 +5,12 @@ package xmlformat
 
 import scalaz._, Scalaz._
 
-@simulacrum.typeclass
 trait XNodeDecoder[A] {
   def fromXml(x: XNode): String \/ A
 }
 object XNodeDecoder   {
+  def apply[A](implicit a: XNodeDecoder[A]): XNodeDecoder[A] = a
+
   implicit def fromTags[A](implicit X: XDecoder[A]): XNodeDecoder[A] = {
     case c @ XChildren(_) => X.fromXml(c)
     case other            => -\/(s"expected tag data but got $other")

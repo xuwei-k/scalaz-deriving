@@ -7,8 +7,6 @@ package jsonformat.benchmarks
 
 import fommil.DerivedEqual
 import jsonformat._
-import jsonformat.JsDecoder.ops._
-import jsonformat.JsEncoder.ops._
 import scalaz._, Scalaz._
 import scalaz.annotation.deriving
 import jsonformat.BenchmarkUtils.getResourceAsString

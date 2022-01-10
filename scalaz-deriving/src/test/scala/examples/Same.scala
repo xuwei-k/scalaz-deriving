@@ -9,12 +9,10 @@ import scala.{ Boolean, Int, Long }
 
 import scalaz._, Scalaz._
 
-import simulacrum._
-
 /**
  * Reimplementation of Equal, to test Decidable and ExtendedInvariantAlt.
  */
-@typeclass trait Same[A] {
+trait Same[A] {
   def same(a1: A, a2: A): Boolean
 
   final def different(a1: A, a2: A): Boolean = !same(a1, a2)

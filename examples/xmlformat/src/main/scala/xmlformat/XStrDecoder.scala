@@ -10,9 +10,7 @@ import scala.util.control.NonFatal
 
 import shapeless.Typeable
 import scalaz._, Scalaz._
-import simulacrum._
 
-@typeclass(generateAllOps = false)
 trait XStrDecoder[A]       { self =>
   def fromXml(x: XString): String \/ A
 
@@ -32,6 +30,8 @@ object XStrDecoder
       def decode[A: XStrDecoder]: String \/ A = XStrDecoder[A].fromXml(x)
     }
   }
+
+  def apply[A](implicit a: XStrDecoder[A]): XStrDecoder[A] = a
 
   @inline def instance[A](f: XString => String \/ A): XStrDecoder[A] = f(_)
   private type Sig[a] = XString => String \/ a

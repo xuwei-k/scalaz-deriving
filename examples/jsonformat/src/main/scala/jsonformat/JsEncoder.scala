@@ -3,11 +3,9 @@
 
 package jsonformat
 
-import simulacrum._
 import scalaz._, Scalaz._
-import JsEncoder.ops._
 
-@typeclass trait JsEncoder[A] {
+trait JsEncoder[A] {
   def toJson(obj: A): JsValue
 
   // for performance
@@ -41,31 +39,32 @@ object JsEncoder
   implicit val char: JsEncoder[Char]     = string.contramap(_.toString)
   implicit val symbol: JsEncoder[Symbol] = string.contramap(_.name)
 
+  def apply[A](implicit a: JsEncoder[A]): JsEncoder[A] = a
 }
 
 private[jsonformat] trait JsEncoderScalaz1 {
   this: JsEncoder.type =>
 
   implicit def ilist[A: JsEncoder]: JsEncoder[IList[A]] =
-    as => JsArray(as.map(_.toJson))
+    as => JsArray(as.map(JsEncoder[A].toJson(_)))
 
   implicit def nel[A: JsEncoder]: JsEncoder[NonEmptyList[A]] =
     ilist[A].contramap(_.list)
 
   implicit def imap[A: JsEncoder]: JsEncoder[String ==>> A] = { m =>
     val fields = m.toList.map { case (k, v) =>
-      k -> v.toJson
+      k -> JsEncoder[A].toJson(v)
     }
     JsObject(fields.toIList)
   }
 
   implicit def maybe[A: JsEncoder]: JsEncoder[Maybe[A]]                   = {
-    case Maybe.Just(a) => a.toJson
+    case Maybe.Just(a) => JsEncoder[A].toJson(a)
     case Maybe.Empty() => JsNull
   }
   implicit def disjunction[A: JsEncoder, B: JsEncoder]: JsEncoder[A \/ B] = {
-    case -\/(a) => a.toJson
-    case \/-(b) => b.toJson
+    case -\/(a) => JsEncoder[A].toJson(a)
+    case \/-(b) => JsEncoder[B].toJson(b)
   }
 
   implicit def tagged[A: JsEncoder, Z]: JsEncoder[A @@ Z] =
@@ -90,7 +89,7 @@ private[jsonformat] trait JsEncoderStdlib1 {
     ilist[A].contramap(_.toIList)
   implicit def dict[A: JsEncoder]: JsEncoder[Map[String, A]] = { m =>
     val fields = m.toList.map { case (k, v) =>
-      k -> v.toJson
+      k -> JsEncoder[A].toJson(v)
     }
     JsObject(fields.toIList)
   }

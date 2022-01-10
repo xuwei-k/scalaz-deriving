@@ -5,8 +5,6 @@ package jsonformat
 
 import org.scalatest._
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
-import JsDecoder.ops._
-import JsEncoder.ops._
 import internal.FastToIList._
 
 import scalaz._, Scalaz._

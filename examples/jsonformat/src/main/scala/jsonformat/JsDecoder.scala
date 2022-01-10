@@ -3,13 +3,12 @@
 
 package jsonformat
 
-import simulacrum._
 import scalaz._, Scalaz._
 import internal.StringyMap
 
 import JsDecoder.ops._
 
-@typeclass(generateAllOps = false) trait JsDecoder[A] {
+trait JsDecoder[A] {
   def fromJson(json: JsValue): String \/ A
 
   // for performance
@@ -25,6 +24,9 @@ object JsDecoder
     with JsDecoderStdlib1
     with JsDecoderScalaz2
     with JsDecoderStdlib2                             {
+
+  def apply[A](implicit a: JsDecoder[A]): JsDecoder[A] = a
+
   object ops {
     implicit final class JsValueExtras(private val j: JsValue) extends AnyVal {
       def as[A: JsDecoder]: String \/ A = JsDecoder[A].fromJson(j)

@@ -7,18 +7,14 @@ import java.lang.String
 import scala.{ AnyVal, Either, Int }
 import scalaz.annotation.deriving
 import scalaz.annotation.xderiving
-import testing.typeclasses.{ Cobar => B, _ }
-import simulacrum.typeclass
 import play.api.libs.json
-import OrphanCobarInstances._
 
-@deriving(Cofoo, B)
 sealed trait Baz
 
-@deriving(json.Format, Cofoo, B, Wibble)
+@deriving(json.Format)
 final case class Foo(string: String, int: Int) extends Baz
 
-@deriving(json.Format, Cofoo, B)
+@deriving(json.Format)
 final case class Bar(foo: Foo) extends Baz
 object Bar {
   def hello: String = ""
@@ -49,7 +45,6 @@ final case class Gaz[T](t: T)
 @deriving(Cofoo)
 final class Waz[T](val t: T)
 
-@typeclass trait Wibble[T] {}
 object DerivedWibble       {
   def gen[T]: Wibble[T] = new Wibble[T] {}
 }

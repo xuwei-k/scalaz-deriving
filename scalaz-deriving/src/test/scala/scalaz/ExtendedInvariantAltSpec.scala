@@ -14,7 +14,6 @@ import examples.adt._
 import examples.recadt._
 import examples.recgadt._
 import examples.{ Default, Same }
-import examples.Same.ops._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

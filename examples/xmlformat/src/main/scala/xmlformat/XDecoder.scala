@@ -4,9 +4,7 @@
 package xmlformat
 
 import scalaz._, Scalaz._
-import simulacrum._
 
-@typeclass(generateAllOps = false)
 trait XDecoder[A]        { self =>
   def fromXml(x: XChildren): String \/ A
 
@@ -23,7 +21,10 @@ object XDecoder
     with XDecoderStdlib1
     with XDecoderScalaz2
     with XDecoderStdlib2 {
-  object ops extends ToXDecoderOps {
+
+  def apply[A](implicit a: XDecoder[A]): XDecoder[A] = a
+
+  object ops {
     implicit class XDecoderOps(private val x: XChildren) extends AnyVal {
       def decode[A: XDecoder]: String \/ A = XDecoder[A].fromXml(x)
     }

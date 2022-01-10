@@ -9,7 +9,6 @@ import scala.{ Boolean, Double, Int, Long }
 
 import scalaz._, Scalaz._
 import scalaz.annotation.deriving
-import simulacrum.typeclass
 
 /**
  * Serialisation format that does not use field names.
@@ -38,7 +37,7 @@ import Packed._
  *
  * See https://github.com/scalaz/scalaz/issues/1907 for a minimised example.
  */
-@typeclass trait BadPack[A] {
+trait BadPack[A] {
   def encode(a: A): Packed
 }
 object BadPack              {
